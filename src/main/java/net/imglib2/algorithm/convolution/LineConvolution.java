@@ -7,9 +7,14 @@ import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.loops.LoopBuilder;
+import net.imglib2.parallel.Parallelization;
+import net.imglib2.parallel.TaskExecutor;
+import net.imglib2.parallel.TaskExecutors;
 import net.imglib2.util.Intervals;
 import net.imglib2.util.Localizables;
 import net.imglib2.view.Views;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * This class can be used to implement a separable convolution. It applies a
@@ -23,10 +28,19 @@ public class LineConvolution< T > implements Convolution<T>
 
 	private final int direction;
 
+	private ExecutorService executor;
+
 	public LineConvolution( final LineConvolverFactory< ? super T > factory, final int direction )
 	{
 		this.factory = factory;
 		this.direction = direction;
+	}
+
+	@Deprecated
+	@Override
+	public void setExecutor( ExecutorService executor )
+	{
+		this.executor = executor;
 	}
 
 	@Override
@@ -56,7 +70,8 @@ public class LineConvolution< T > implements Convolution<T>
 		dim[ direction ] = 1;
 
 		RandomAccessibleInterval< Localizable > positions = Localizables.randomAccessibleInterval( new FinalInterval( dim ) );
-		LoopBuilder.setImages( positions ).multiThreaded().forEachChunk(
+		TaskExecutor taskExecutor = executor == null ? Parallelization.getTaskExecutor() : TaskExecutors.forExecutorService( executor );
+		LoopBuilder.setImages( positions ).multiThreaded(taskExecutor).forEachChunk(
 				chunk -> {
 
 					final RandomAccess< ? extends T > in = sourceInterval.randomAccess();

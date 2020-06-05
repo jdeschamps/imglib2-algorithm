@@ -31,6 +31,14 @@ class Concatenation< T > implements Convolution< T >
 		this.steps = new ArrayList<>( steps );
 	}
 
+	@Deprecated
+	@Override
+	public void setExecutor( ExecutorService executor )
+	{
+		for ( Convolution<T> step : steps )
+			step.setExecutor( executor );
+	}
+
 	@Override
 	public Interval requiredSourceInterval( final Interval targetInterval )
 	{
