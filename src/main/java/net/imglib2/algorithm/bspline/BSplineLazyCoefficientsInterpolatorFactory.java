@@ -2,7 +2,7 @@
  * #%L
  * ImgLib2: a general-purpose, multidimensional image processing library.
  * %%
- * Copyright (C) 2009 - 2018 Tobias Pietzsch, Stephan Preibisch, Stephan Saalfeld,
+ * Copyright (C) 2009 - 2021 Tobias Pietzsch, Stephan Preibisch, Stephan Saalfeld,
  * John Bogovic, Albert Cardona, Barry DeZonia, Christian Dietz, Jan Funke,
  * Aivar Grislis, Jonathan Hale, Grant Harris, Stefan Helfrich, Mark Hiner,
  * Martin Horn, Steffen Jaensch, Lee Kamentsky, Larry Lindsey, Melissa Linkert,
@@ -234,9 +234,6 @@ public class BSplineLazyCoefficientsInterpolatorFactory<T extends RealType<T>, S
 
 	/**
 	 * Returns an image of coefficients that is lazily evaluated and cached.
-	 *
-	 * @param <R>
-	 *            the type
 	 */
 	public static class LazyCellImgFactory< T extends RealType< T >, S extends RealType< S > & NativeType< S > > extends ImgFactory< S >
 	{
@@ -285,7 +282,7 @@ public class BSplineLazyCoefficientsInterpolatorFactory<T extends RealType<T>, S
 		@Override
 		public Img< S > create( long[] dim, S type )
 		{
-			return Lazy.process( interval, blockSize, type, AccessFlags.setOf( AccessFlags.VOLATILE ), decomposition );
+			return Lazy.generate( interval, blockSize, type, AccessFlags.setOf( AccessFlags.VOLATILE ), decomposition );
 		}
 	}
 

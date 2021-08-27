@@ -2,7 +2,7 @@
  * #%L
  * ImgLib2: a general-purpose, multidimensional image processing library.
  * %%
- * Copyright (C) 2009 - 2018 Tobias Pietzsch, Stephan Preibisch, Stephan Saalfeld,
+ * Copyright (C) 2009 - 2021 Tobias Pietzsch, Stephan Preibisch, Stephan Saalfeld,
  * John Bogovic, Albert Cardona, Barry DeZonia, Christian Dietz, Jan Funke,
  * Aivar Grislis, Jonathan Hale, Grant Harris, Stefan Helfrich, Mark Hiner,
  * Martin Horn, Steffen Jaensch, Lee Kamentsky, Larry Lindsey, Melissa Linkert,
@@ -46,7 +46,7 @@ import net.imglib2.type.numeric.RealType;
 /**
  * Performs cubic b-spline interpolation by pre-computing coefficients on the fly.
  * This will be less time efficient, in general, than pre-computing coefficients
- * using a {@link BSplineDecomposition}. This will be more memory-efficient
+ * using a {@code BSplineDecomposition}. This will be more memory-efficient
  * though.
  *
  * See Unser, Aldroubi, and Eden "Fast B-Spline Transforms for Continuous Image
